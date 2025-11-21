@@ -56,7 +56,7 @@
         <h1>Random String Generator</h1>
         <p>Generate a random 64-character hexadecimal string (similar to <code>openssl rand -hex 32</code>)</p>
         
-        <div class="random-string" id="randomString"></div>
+        <div class="random-string" id="randomString" aria-live="polite" aria-atomic="true"></div>
         
         <button onclick="generateRandomString()">Generate New String</button>
         
@@ -65,16 +65,21 @@
 
     <script>
         function generateRandomString() {
-            // Generate 32 random bytes (256 bits) and convert to hex (64 characters)
-            const array = new Uint8Array(32);
-            crypto.getRandomValues(array);
-            
-            // Convert bytes to hexadecimal string
-            const hexString = Array.from(array)
-                .map(byte => byte.toString(16).padStart(2, '0'))
-                .join('');
-            
-            document.getElementById('randomString').textContent = hexString;
+            try {
+                // Generate 32 random bytes (256 bits) and convert to hex (64 characters)
+                const array = new Uint8Array(32);
+                crypto.getRandomValues(array);
+                
+                // Convert bytes to hexadecimal string
+                const hexString = Array.from(array)
+                    .map(byte => byte.toString(16).padStart(2, '0'))
+                    .join('');
+                
+                document.getElementById('randomString').textContent = hexString;
+            } catch (error) {
+                document.getElementById('randomString').textContent = 'Error: Unable to generate random string. Your browser may not support the Web Crypto API.';
+                console.error('Error generating random string:', error);
+            }
         }
 
         // Generate a random string on page load
