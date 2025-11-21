@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random String Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .random-string {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 16px;
+            word-break: break-all;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .info {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Random String Generator</h1>
+        <p>Generate a random 64-character hexadecimal string (similar to <code>openssl rand -hex 32</code>)</p>
+        
+        <div class="random-string" id="randomString"></div>
+        
+        <button onclick="generateRandomString()">Generate New String</button>
+        
+        <p class="info">Each string contains 64 hexadecimal characters (0-9, a-f) representing 32 random bytes.</p>
+    </div>
+
+    <script>
+        function generateRandomString() {
+            // Generate 32 random bytes (256 bits) and convert to hex (64 characters)
+            const array = new Uint8Array(32);
+            crypto.getRandomValues(array);
+            
+            // Convert bytes to hexadecimal string
+            const hexString = Array.from(array)
+                .map(byte => byte.toString(16).padStart(2, '0'))
+                .join('');
+            
+            document.getElementById('randomString').textContent = hexString;
+        }
+
+        // Generate a random string on page load
+        generateRandomString();
+    </script>
+</body>
+</html>
