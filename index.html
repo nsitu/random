@@ -56,9 +56,9 @@
         <h1>Random String Generator</h1>
         <p>Generate a random 64-character hexadecimal string (similar to <code>openssl rand -hex 32</code>)</p>
         
-        <div class="random-string" id="randomString" aria-live="polite" aria-atomic="true"></div>
+        <div class="random-string" id="randomString" role="status" aria-live="polite" aria-atomic="true" aria-label="Generated random string"></div>
         
-        <button onclick="generateRandomString()">Generate New String</button>
+        <button onclick="generateRandomString()" aria-label="Generate a new random 64-character hexadecimal string">Generate New String</button>
         
         <p class="info">Each string contains 64 hexadecimal characters (0-9, a-f) representing 32 random bytes.</p>
     </div>
@@ -77,7 +77,7 @@
                 
                 document.getElementById('randomString').textContent = hexString;
             } catch (error) {
-                document.getElementById('randomString').textContent = 'Error: Unable to generate random string. Your browser may not support the Web Crypto API.';
+                document.getElementById('randomString').textContent = 'Error: Web Crypto API not supported';
                 console.error('Error generating random string:', error);
             }
         }
